@@ -1,0 +1,73 @@
+// Copyright Nezametdinov E. Ildus 2023.
+// Distributed under the GNU General Public License, Version 3.
+// (See accompanying file LICENSE_GPL_3_0.txt or copy at
+// https://www.gnu.org/licenses/gpl-3.0.txt)
+//
+#ifndef H_15887E9CADE3431D9A0B0B929D5D70A6
+#define H_15887E9CADE3431D9A0B0B929D5D70A6
+
+#include <map>
+#include <set>
+#include <string>
+#include <string_view>
+
+namespace rose {
+
+////////////////////////////////////////////////////////////////////////////////
+// Database of executable files.
+////////////////////////////////////////////////////////////////////////////////
+
+struct executables_database {
+    ////////////////////////////////////////////////////////////////////////////
+    // Construction/destruction.
+    ////////////////////////////////////////////////////////////////////////////
+
+    executables_database();
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Initialization interface.
+    ////////////////////////////////////////////////////////////////////////////
+
+    void
+    initialize();
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Lookup interface.
+    ////////////////////////////////////////////////////////////////////////////
+
+    void
+    autocomplete(std::u8string_view input, std::u8string& result);
+
+    void
+    lookup_suggestions(std::u8string_view input, std::u8string& result);
+
+    void
+    modify_command_string(std::u8string_view input, std::u8string& result);
+
+private:
+    ////////////////////////////////////////////////////////////////////////////
+    // Utility functions.
+    ////////////////////////////////////////////////////////////////////////////
+
+    void
+    append_command_string_( //
+        std::u8string_view command, std::u8string_view arguments,
+        std::u8string& result);
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Data members.
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Temporary string buffer.
+    std::u8string buffer_;
+
+    // Database of full file paths.
+    std::set<std::u8string, std::less<>> paths_;
+
+    // Database of file names with corresponding paths.
+    std::map<std::u8string, std::u8string, std::less<>> files_;
+};
+
+} // namespace rose
+
+#endif // H_15887E9CADE3431D9A0B0B929D5D70A6
